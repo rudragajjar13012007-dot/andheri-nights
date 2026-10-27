@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Andheri Nights – Halloween party passes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#F3ECEA; --surface:#FBF7F6; --raise:#E8DCDA; --ink:#1A0606; --muted:#6B4846; --line:#D5BFBC;
+  --accent:#9B0F17; --accent-ink:#FFFFFF; --ok:#1F6E45; --err:#9B0F17; --glow:rgba(155,15,23,.35);
+  --display:"Creepster", Georgia, serif;
+  --body:"Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#080303; --surface:#140808; --raise:#1F0C0C; --ink:#F2E4E1; --muted:#A3817E; --line:#3A1515;
+    --accent:#E0141F; --accent-ink:#FFFFFF; --ok:#4FBF7E; --err:#FF5A5F; --glow:rgba(224,20,31,.55);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#080303; --surface:#140808; --raise:#1F0C0C; --ink:#F2E4E1; --muted:#A3817E; --line:#3A1515;
+  --accent:#E0141F; --accent-ink:#FFFFFF; --ok:#4FBF7E; --err:#FF5A5F; --glow:rgba(224,20,31,.55);
+}
+:root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
+*,*::before,*::after{ box-sizing:inherit; }
+html{ scroll-padding-top:env(safe-area-inset-top,0px); }
+body{ margin:0; background:var(--bg); color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased; }
+button,input{ font:inherit; color:inherit; }
+button,a.btn{ cursor:pointer; }
+:focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
+[hidden]{ display:none !important; }
+
+.hero{ position:relative; text-align:center; padding:40px 20px 30px; }
+.hero h1{ font-family:var(--display); font-weight:400; font-size:clamp(3rem, 14vw, 5.2rem); line-height:.9; margin:0; color:var(--accent); text-shadow:0 0 22px var(--glow); letter-spacing:.02em; }
+.hero p{ margin:10px 0 0; font-size:1.1rem; font-weight:600; }
+.hero .when{ margin-top:4px; color:var(--muted); font-weight:500; font-size:.98rem; }
+.drips{ display:block; width:100%; height:40px; color:var(--accent); }
+.bar{ height:6px; background:var(--accent); }
+
+.wrap{ max-width:540px; margin:0 auto; padding:8px 18px 64px; }
+.facts{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0 0 26px; }
+.facts div{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 14px; }
+.facts .wide{ grid-column:1 / -1; border-color:var(--accent); }
+.facts dt{ color:var(--muted); font-size:.8rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em; }
+.facts dd{ margin:2px 0 0; font-weight:700; }
+.progress{ display:flex; gap:6px; list-style:none; margin:0 0 6px; padding:0; }
+.progress li{ flex:1; height:4px; border-radius:2px; background:var(--line); }
+.progress li.done, .progress li.now{ background:var(--accent); }
+.stepno{ color:var(--muted); font-size:.85rem; margin:0 0 18px; }
+
+section h2{ font-size:1.5rem; margin:0 0 6px; line-height:1.2; }
+section .lead{ color:var(--muted); margin:0 0 18px; }
+
+.passes{ display:grid; gap:10px; margin-bottom:18px; }
+.pass{ display:flex; align-items:center; gap:14px; background:var(--surface); border:1.5px solid var(--line); border-radius:12px; padding:14px 16px; cursor:pointer; }
+.pass input{ accent-color:var(--accent); width:20px; height:20px; margin:0; }
+.pass .nm{ font-weight:700; font-size:1.08rem; }
+.pass .pp{ color:var(--muted); font-size:.9rem; }
+.pass .pr{ margin-left:auto; font-weight:700; font-size:1.15rem; font-variant-numeric:tabular-nums; text-align:right; display:flex; flex-direction:column; align-items:flex-end; }
+.pass .pr s{ color:var(--muted); font-weight:500; font-size:.85rem; }
+.pass .info{ display:flex; flex-direction:column; gap:2px; }
+.pass .badge{ display:inline-block; margin-left:8px; background:var(--accent); color:var(--accent-ink); border-radius:999px; padding:2px 9px; font-size:.75rem; font-weight:700; vertical-align:2px; box-shadow:0 0 12px var(--glow); }
+.pass .note{ font-size:.85rem; font-weight:600; color:var(--accent); }
+.pass .save{ font-size:.85rem; font-weight:700; color:var(--ok); }
+.glist{ display:block; text-align:center; margin-top:14px; color:var(--accent); font-weight:600; }
+.help{ text-align:center; color:var(--muted); font-size:.92rem; margin:36px 0 0; padding-top:18px; border-top:1px solid var(--line); }
+.help a{ color:var(--accent); font-weight:600; }
+.pass:has(input:checked){ border-color:var(--accent); box-shadow:0 0 0 1px var(--accent), 0 0 18px var(--glow); }
+
+.qty{ display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:10px 14px; margin-bottom:12px; }
+.qty .ctl{ display:flex; align-items:center; gap:12px; }
+.qty button{ width:38px; height:38px; border-radius:50%; border:1px solid var(--line); background:transparent; font-size:1.2rem; font-weight:700; }
+.qty output{ min-width:20px; text-align:center; font-weight:700; font-size:1.1rem; }
+.total{ display:flex; justify-content:space-between; align-items:baseline; margin:4px 2px 20px; }
+.total b{ font-size:1.6rem; font-variant-numeric:tabular-nums; }
+
+label.f{ display:flex; flex-direction:column; gap:6px; font-weight:600; font-size:.92rem; margin-bottom:14px; }
+.in{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:1rem; font-weight:500; }
+.in:focus{ border-color:var(--accent); outline:none; box-shadow:0 0 0 3px var(--glow); }
+
+.btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%; border:0; border-radius:12px; padding:15px 18px; font-weight:700; font-size:1.05rem; background:var(--accent); color:var(--accent-ink); text-decoration:none; }
+.btn.ghost{ background:transparent; color:var(--ink); border:1px solid var(--line); }
+.btn.wa{ background:#1FAF52; color:#fff; }
+.row{ display:flex; gap:10px; margin-top:8px; }
+.row .btn.ghost{ width:auto; flex:0 0 auto; padding:15px 18px; }
+.err{ color:var(--err); font-weight:600; font-size:.92rem; margin:0 0 12px; }
+
+.paybox{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px; text-align:center; margin-bottom:16px; }
+.qrbox{ background:#FFFFFF; border:1px solid var(--line); border-radius:14px; padding:18px 16px 14px; text-align:center; margin-bottom:16px; }
+.payqr{ display:block; width:min(280px, 82%); aspect-ratio:1/1; height:auto; margin:0 auto 10px; image-rendering:pixelated; }
+.amtlbl{ color:var(--muted); font-size:.85rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em; }
+.payhint{ margin:0; color:#4A3A3A; font-size:.9rem; font-weight:600; }
+.paybox .amt{ font-size:2.2rem; font-weight:700; font-variant-numeric:tabular-nums; }
+.qr{ background:#fff; border-radius:12px; width:200px; height:200px; margin:14px auto; display:grid; place-items:center; }
+.qr svg{ width:176px; height:176px; }
+.upi{ display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; font-weight:600; }
+.upi code{ font-family:inherit; background:var(--raise); padding:6px 10px; border-radius:8px; }
+.copy{ border:1px solid var(--line); background:transparent; border-radius:8px; padding:6px 12px; font-weight:600; font-size:.9rem; }
+.apps{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
+.apps .btn{ font-size:.98rem; padding:13px 10px; }
+
+.drop{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; text-align:center; border:2px dashed var(--line); border-radius:14px; padding:26px 16px; background:var(--surface); cursor:pointer; margin-bottom:14px; font-weight:600; }
+.drop small{ color:var(--muted); font-weight:500; }
+.drop.has{ border-style:solid; border-color:var(--ok); padding:10px; }
+.drop img{ max-width:100%; max-height:300px; border-radius:10px; display:block; }
+.drop input{ position:absolute; width:1px; height:1px; opacity:0; }
+
+.sum{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:6px 16px; margin:0 0 16px; }
+.sum div{ display:flex; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); }
+.sum div:last-child{ border-bottom:0; }
+.sum dt{ color:var(--muted); }
+.sum dd{ margin:0; font-weight:600; text-align:right; }
+.next{ color:var(--muted); font-size:.95rem; margin:16px 0 0; }
+.done{ text-align:center; padding:8px 0; }
+.done .big{ font-family:var(--display); font-size:3rem; color:var(--accent); margin:0; line-height:1; text-shadow:0 0 18px var(--glow); }
+</style>
+</head>
+<body>
+<header class="hero">
+  <h1>Andheri Nights</h1>
+  <p>Halloween party</p>
+  <p class="when" id="when"></p>
+</header>
+<div class="bar"></div>
+<svg class="drips" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 0H1200V2H1143C1141 2 1138 14 1135 14C1132 14 1129 2 1127 2H936C934 2 930 25 927 25C924 25 920 2 918 2H848C846 2 846 38 843 38C840 38 840 2 838 2H706C704 2 702.5 30 699.5 30C696.5 30 695 2 693 2H489C487 2 482 28 479 28C476 28 471 2 469 2H348C346 2 346 30 343 30C340 30 340 2 338 2H241C239 2 234.5 22 231.5 22C228.5 22 224 2 222 2H188C186 2 186 28 183 28C180 28 180 2 178 2H124C122 2 118 15 115 15C112 15 108 2 106 2H0Z"/></svg>
+
+<main class="wrap">
+  <dl class="facts">
+    <div><dt>When</dt><dd>Sat, 31 Oct, 7 PM</dd></div>
+    <div><dt>Where</dt><dd>Kuhoo, Mehsana</dd></div>
+    <div class="wide"><dt>Dress code</dt><dd>Red and black, all red, all black, or any role play or costume</dd></div>
+  </dl>
+  <ol class="progress" id="progress" aria-hidden="true"><li></li><li></li><li></li><li></li></ol>
+  <p class="stepno" id="stepno"></p>
+
+  <section data-step="1" aria-labelledby="h1s">
+    <h2 id="h1s">Choose your pass</h2>
+    <div class="passes" id="passes" role="radiogroup" aria-label="Pass type"></div>
+    <div class="qty">
+      <span>How many passes</span>
+      <div class="ctl">
+        <button type="button" id="minus" aria-label="One less pass">−</button>
+        <output id="qty">1</output>
+        <button type="button" id="plus" aria-label="One more pass">+</button>
+      </div>
+    </div>
+    <div class="total"><span id="totalLbl">Total</span><b id="total"></b></div>
+    <p class="err" id="err1" hidden></p>
+    <button type="button" class="btn" data-next="1">Continue</button>
+  </section>
+
+  <section data-step="2" aria-labelledby="h2s" hidden>
+    <h2 id="h2s">Your details</h2>
+    <p class="lead">Your pass will be sent to this WhatsApp number.</p>
+    <label class="f">Full name<input class="in" id="name" autocomplete="name" maxlength="60" placeholder="Aarav Shah"></label>
+    <label class="f">WhatsApp number<input class="in" id="phone" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="98765 43210"></label>
+    <p class="err" id="err2" hidden></p>
+    <div class="row"><button type="button" class="btn ghost" data-back>Back</button><button type="button" class="btn" data-next="2">Continue</button></div>
+  </section>
+
+  <section data-step="3" aria-labelledby="h3s" hidden>
+    <h2 id="h3s">Payment screenshot</h2>
+    <p class="lead" id="payLead"></p>
+    <div class="paybox" id="paybox"><div class="amtlbl">Amount to pay</div><div class="amt" id="payAmt"></div></div><div class="qrbox"><img class="payqr" alt="Andheri Nights PhonePe payment QR code" src="data:image/png;base64,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"><p class="payhint">Scan with PhonePe, Google Pay, Paytm or any UPI app</p></div>
+    <label class="drop" id="drop">
+      <input type="file" id="shot" accept="image/*">
+      <span id="dropTxt">Upload payment screenshot</span>
+      <small id="dropSub">PNG or JPG of your successful payment</small>
+      <img id="shotPrev" alt="Your payment screenshot" hidden>
+    </label>
+    <label class="f">UTR / UPI reference (optional)<input class="in" id="utr" inputmode="numeric" maxlength="12" placeholder="12 digits from the screenshot"></label>
+    <p class="err" id="err3" hidden></p>
+    <div class="row"><button type="button" class="btn ghost" data-back>Back</button><button type="button" class="btn" data-next="3">Continue</button></div>
+  </section>
+
+  <section data-step="4" aria-labelledby="h4s" hidden>
+    <div class="done"><p class="big">Almost in</p></div>
+    <h2 id="h4s">Send it to our team</h2>
+    <p class="lead">Tap below. Your booking details are filled in. Attach your payment screenshot in the chat before sending.</p>
+    <dl class="sum" id="sum"></dl>
+    <button type="button" class="btn wa" id="shareBtn" hidden>Share screenshot on WhatsApp</button>
+    <a class="btn wa" id="waBtn" target="_blank" rel="noopener" href="#" style="margin-top:10px">Send booking on WhatsApp</a>
+    <p class="next">Our team checks every screenshot. Once your payment is confirmed, you’ll get your pass with QR and the full party details on WhatsApp. Bookings without a confirmed payment don’t get a pass.</p>
+    <div class="row"><button type="button" class="btn ghost" data-back>Back</button></div>
+  </section>
+  <p class="help">Need help? <a target="_blank" rel="noopener" href="https://wa.me/917984290479">WhatsApp us at +91 79842 90479</a></p>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  /* Event settings */
+  var EVENT = {
+    date: "31 October 2026, 7 PM, Kuhoo, Mehsana",
+    whatsapp: "917984290479",  /* team / support WhatsApp: +91 79842 90479 */
+    maxPasses: 6,
+    passes: [
+      { name: "Solo", people: 1, price: 599 },
+      { name: "Couple", people: 2, price: 1150, note: "1 girl + 1 boy only" },
+      { name: "Group of 5", people: 5, price: 2800 },
+      { name: "Group of 10", people: 10, price: 5300 }
+    ]
+  };
+  var STEPS = 4;
+
+  function $(s){ return document.querySelector(s); }
+  function rupee(n){ return "₹" + Number(n || 0).toLocaleString("en-IN"); }
+  function err(id, msg){ var e = $("#" + id); if (!msg) { e.hidden = true; return; } e.textContent = msg; e.hidden = false; }
+  var A = "23456789ABCDEFGHJKMNPQRSTUVWXYZ", ref = "AN-";
+  for (var i = 0; i < 5; i++) ref += A[Math.floor(Math.random() * A.length)];
+  var S = { step: 1, pass: null, qty: 1, name: "", phone: "", file: null, utr: "" };
+
+  $("#when").textContent = EVENT.date;
+
+  /* Step 1 */
+  var BASE = Math.max.apply(null, EVENT.passes.map(function(p){ return p.price / p.people; }));
+  $("#passes").innerHTML = EVENT.passes.map(function(p, i){
+    var each = p.price / p.people, full = Math.round(BASE * p.people), save = full - p.price;
+    var pct = Math.round((1 - each / BASE) * 100);
+    return '<label class="pass"><input type="radio" name="pass" value="' + i + '">' +
+      '<span class="info"><span class="nm">' + p.name + (pct > 0 ? '<span class="badge">' + pct + "% off</span>" : "") + "</span>" +
+      '<span class="pp">' + (p.people > 1 ? p.people + " people, " + rupee(Math.round(each)) + " each" : "1 person") + "</span>" +
+      (p.note ? '<span class="note">' + p.note + "</span>" : "") +
+      (save > 0 ? '<span class="save">You save ' + rupee(save) + "</span>" : "") + "</span>" +
+      '<span class="pr">' + (save > 0 ? "<s>" + rupee(full) + "</s>" : "") + rupee(p.price) + "</span></label>";
+  }).join("");
+  function total(){ return S.pass ? (S.pass.price || 0) * S.qty : 0; }
+  function entries(){ return S.pass ? S.qty * S.pass.people : 0; }
+  function renderTotal(){
+    $("#qty").textContent = S.qty;
+    $("#total").textContent = total() > 0 ? rupee(total()) : "";
+    $("#totalLbl").textContent = S.pass ? entries() + (entries() > 1 ? " entries" : " entry") : "Pick a pass above";
+  }
+  $("#passes").addEventListener("change", function(e){ S.pass = EVENT.passes[+e.target.value]; err("err1"); renderTotal(); });
+  $("#minus").addEventListener("click", function(){ if (S.qty > 1) S.qty--; renderTotal(); });
+  $("#plus").addEventListener("click", function(){ if (S.qty < EVENT.maxPasses) S.qty++; renderTotal(); });
+
+  /* Step 3 */
+  function renderPay(){
+    var amt = total();
+    $("#paybox").hidden = !(amt > 0);
+    $("#payAmt").textContent = rupee(amt);
+    $("#payLead").textContent = (amt > 0 ? "Pay " + rupee(amt) + " to Andheri Nights" : "Pay for your pass") +
+      ", then upload the screenshot of your successful payment. You can’t continue without it.";
+  }
+  $("#shot").addEventListener("change", function(e){
+    var f = e.target.files && e.target.files[0];
+    if (!f) return;
+    if (!/^image\//.test(f.type)) { err("err3", "That file isn’t an image. Upload the screenshot from your payment app."); return; }
+    S.file = f; err("err3");
+    var img = $("#shotPrev"); img.src = URL.createObjectURL(f); img.hidden = false;
+    $("#drop").classList.add("has"); $("#dropTxt").textContent = "Screenshot added, tap to change"; $("#dropSub").hidden = true;
+  });
+  $("#utr").addEventListener("input", function(e){ e.target.value = e.target.value.replace(/\D/g, "").slice(0, 12); err("err3"); });
+
+  /* Step 4 */
+  function message(){
+    return "Hi Andheri Nights, I’ve paid for my Halloween pass 🩸\n\n" +
+      "Booking ref: " + ref + "\nName: " + S.name + "\nWhatsApp: " + S.phone + "\n" +
+      "Pass: " + S.pass.name + " × " + S.qty + " (" + entries() + " entries)\n" +
+      (total() > 0 ? "Amount paid: " + rupee(total()) + "\n" : "") +
+      (S.utr ? "UTR: " + S.utr + "\n" : "") + "\nMy payment screenshot is attached.";
+  }
+  function renderSummary(){
+    var rows = [["Booking ref", ref], ["Name", S.name], ["Pass", S.pass.name + " × " + S.qty], ["Entries", entries()]];
+    if (total() > 0) rows.push(["Paid", rupee(total())]);
+    if (S.utr) rows.push(["UTR", S.utr]);
+    $("#sum").innerHTML = rows.map(function(){ return "<div><dt></dt><dd></dd></div>"; }).join("");
+    [].forEach.call(document.querySelectorAll("#sum div"), function(d, i){ d.firstChild.textContent = rows[i][0]; d.lastChild.textContent = rows[i][1]; });
+    var wa = $("#waBtn");
+    if (EVENT.whatsapp) { wa.href = "https://wa.me/" + EVENT.whatsapp + "?text=" + encodeURIComponent(message()); wa.hidden = false; }
+    else wa.hidden = true;
+    var canShare = false;
+    try { canShare = !!(navigator.canShare && navigator.canShare({ files: [S.file] })); } catch (e) {}
+    $("#shareBtn").hidden = !canShare;
+  }
+  $("#shareBtn").addEventListener("click", function(){
+    try { navigator.share({ files: [S.file], text: message() }).catch(function(){}); } catch (e) {}
+  });
+
+  /* Checks that stop you moving on */
+  function check(step){
+    if (step === 1 && !S.pass) return err("err1", "Choose a pass to continue."), false;
+    if (step === 2) {
+      S.name = $("#name").value.trim();
+      var d = $("#phone").value.replace(/\D/g, "");
+      if (d.length === 12 && d.indexOf("91") === 0) d = d.slice(2);
+      if (d.length === 11 && d[0] === "0") d = d.slice(1);
+      if (S.name.length < 2) return err("err2", "Enter your full name."), false;
+      if (!/^[6-9]\d{9}$/.test(d)) return err("err2", "Enter a 10-digit Indian mobile number."), false;
+      S.phone = "+91 " + d.slice(0, 5) + " " + d.slice(5);
+    }
+    if (step === 3) {
+      S.utr = $("#utr").value;
+      if (!S.file) return err("err3", "Payment not complete. Upload the screenshot of your successful payment to continue."), false;
+      if (S.utr && !/^\d{12}$/.test(S.utr)) return err("err3", "A UTR has 12 digits. Check the number or leave it empty."), false;
+    }
+    return true;
+  }
+  function go(n, quiet){
+    S.step = n;
+    document.querySelectorAll("section[data-step]").forEach(function(s){ s.hidden = +s.dataset.step !== n; });
+    document.querySelectorAll("#progress li").forEach(function(li, i){ li.className = i + 1 < n ? "done" : (i + 1 === n ? "now" : ""); });
+    $("#stepno").textContent = "Step " + n + " of " + STEPS;
+    if (n === 3) renderPay();
+    if (n === 4) renderSummary();
+    if (quiet) return;
+    var h = document.querySelector('section[data-step="' + n + '"] h2');
+    if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+    window.scrollTo({ top: document.querySelector(".wrap").offsetTop - 20, behavior: "smooth" });
+  }
+  document.addEventListener("click", function(e){
+    var nx = e.target.closest("[data-next]");
+    if (nx) { var st = +nx.dataset.next; if (check(st)) go(st + 1); }
+    if (e.target.closest("[data-back]") && S.step > 1) go(S.step - 1);
+  });
+
+  renderTotal(); go(1, true);
+})();
+</script>
+</body>
+</html>
